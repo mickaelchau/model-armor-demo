@@ -1,4 +1,4 @@
-r <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,22 +8,26 @@ r <!DOCTYPE html>
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+            overflow: hidden;
         }
+
         .container {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 10%;
             flex-grow: 1;
             transform: scale(1.5);
+            width: 50%;
+        }
+        .logo {
+            width: 50%;
         }
         .logo img {
-            width: 225px;
+            width: 300px;
             height: auto;
         }
         .text {
@@ -36,7 +40,6 @@ r <!DOCTYPE html>
             margin-top: 30px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         input[type="text"] {
             padding: 15px;
@@ -48,7 +51,7 @@ r <!DOCTYPE html>
             margin-top: 10px;
             font-size: 18px;
             color: #0066cc;
-            display: none;
+            display: block;
         }
         input[type="submit"] {
             padding: 15px 30px;
@@ -59,14 +62,15 @@ r <!DOCTYPE html>
             border: none;
             font-size: 18px;
         }
+        .content {
+            display: flex;
+            align-items: flex-start;
+        }
         .footer {
             width: 100%;
             text-align: center;
-            font-size: 16px;
-            color: #555;
             padding: 10px 0;
-            position: absolute;
-            bottom: 0;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -75,17 +79,28 @@ r <!DOCTYPE html>
         <div class="logo">
             <img src="{{ url_for('static', filename='model_armor.jpeg') }}" alt="Model Armor">
         </div>
-        <div>
-            <div class="text">MODEL ARMOR</div>
-            <div class="form-container">
-                <form method="post">
-                    <input type="text" name="user_input" placeholder="Enter text here" required>
-                    {% if api_response %}
-                        <div class="response" style="display: block;">{{ api_response }}</div>
-                    {% endif %}
-                    <br>
-                    <input type="submit" value="Submit">
-                </form>
+        <div class="content">
+            <div>
+                <div class="text">MODEL ARMOR</div>
+                <p>WARNING! Model Armor is configured very aggressively, it can generate false positive (Benign results tagged as malicious)</p>
+                <div class="form-container">
+                    <form method="post">
+                        <input type="text" name="user_input" placeholder="Enter prompt here" required>
+                        {% if user_input %}
+                        <div class="response" style="display: block; color:green; font-weight: bold;">User prompt: {{ user_input }}</div>
+                        {% endif %}
+                        <br/>
+                        {% for category, verdict in categories.items() %}
+                            {% if verdict %}
+                                <div class="response" style="display: block; {% if verdict == 'MATCH_FOUND' %}color: red; font-weight: bold;{% endif %}">
+                                    {{ category }}: {{ verdict }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
