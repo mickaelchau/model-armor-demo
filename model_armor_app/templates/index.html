@@ -1,0 +1,94 @@
+r <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Armor</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-grow: 1;
+            transform: scale(1.5);
+        }
+        .logo img {
+            width: 225px;
+            height: auto;
+        }
+        .text {
+            font-size: 54px;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 3px;
+        }
+        .form-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            padding: 15px;
+            margin-top: 15px;
+            width: 375px;
+            font-size: 18px;
+        }
+        .response {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #0066cc;
+            display: none;
+        }
+        input[type="submit"] {
+            padding: 15px 30px;
+            margin-top: 15px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            font-size: 18px;
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='model_armor.jpeg') }}" alt="Model Armor">
+        </div>
+        <div>
+            <div class="text">MODEL ARMOR</div>
+            <div class="form-container">
+                <form method="post">
+                    <input type="text" name="user_input" placeholder="Enter text here" required>
+                    {% if api_response %}
+                        <div class="response" style="display: block;">{{ api_response }}</div>
+                    {% endif %}
+                    <br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">Developed by @mickaelchau</div>
+</body>
+</html>

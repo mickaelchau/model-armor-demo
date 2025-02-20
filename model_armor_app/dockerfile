@@ -1,0 +1,24 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the application files into the container
+COPY . /app
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port 5000 for Flask
+EXPOSE 8080
+
+# Set the environment variable to disable buffering (useful for logs)
+ENV PYTHONUNBUFFERED=1
+
+# Ensure the templates and static directories are included
+COPY templates /app/templates
+COPY static /app/static
+
+# Run the Flask application
+CMD ["python", "web_app.py"]
